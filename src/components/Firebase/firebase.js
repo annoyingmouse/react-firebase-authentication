@@ -25,18 +25,15 @@ class Firebase {
 
     // *** Auth API ***
 
-    doCreateUserWithEmailAndPassword = (email, password) =>
-        this.auth.createUserWithEmailAndPassword(email, password);
+    doCreateUserWithEmailAndPassword = (email, password) => this.auth.createUserWithEmailAndPassword(email, password);
 
-    doSignInWithEmailAndPassword = (email, password) =>
-        this.auth.signInWithEmailAndPassword(email, password);
+    doSignInWithEmailAndPassword = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
 
     doSignOut = () => this.auth.signOut();
 
     doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
-    doPasswordUpdate = password =>
-        this.auth.currentUser.updatePassword(password);
+    doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 
     // *** Merge Auth and DB User API *** //
 
@@ -69,10 +66,9 @@ class Firebase {
             }
         });
 
-    doSendEmailVerification = () =>
-        this.auth.currentUser.sendEmailVerification({
-            url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
-        });
+    doSendEmailVerification = () => this.auth.currentUser.sendEmailVerification({
+        url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
+    });
 
 
     // *** User API ***
