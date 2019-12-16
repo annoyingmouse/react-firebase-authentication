@@ -28,7 +28,6 @@ class UserListBase extends Component {
             users: [],
         };
     }
-
     componentDidMount() {
         this.setState({ loading: true });
 
@@ -46,14 +45,11 @@ class UserListBase extends Component {
             });
         });
     }
-
     componentWillUnmount() {
         this.props.firebase.users().off();
     }
-
     render() {
         const { users, loading } = this.state;
-
         return (
             <div>
                 <h2>Users</h2>
@@ -71,12 +67,10 @@ class UserListBase extends Component {
                                 <strong>Username:</strong> {user.username}
                             </span>
                             <span>
-                                <Link
-                                    to={{
-                                        pathname: `${ROUTES.ADMIN}/${user.uid}`,
-                                        state: { user },
-                                    }}
-                                >
+                                <Link to={{
+                                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
+                                    state: { user },
+                                }}>
                                     Details
                                 </Link>
                             </span>
@@ -91,21 +85,17 @@ class UserListBase extends Component {
 class UserItemBase extends Component {
     constructor(props) {
         super(props);
-        console.log("Hi there")
         this.state = {
             loading: false,
             user: null,
             ...props.location.state,
         };
     }
-
     componentDidMount() {
-        // if (this.state.user) {
-        //     return;
-        // }
-
+        if (this.state.user) {
+            return;
+        }
         this.setState({ loading: true });
-
         this.props.firebase
             .user(this.props.match.params.id)
             .on('value', snapshot => {
@@ -115,22 +105,18 @@ class UserItemBase extends Component {
                 });
             });
     }
-
     componentWillUnmount() {
         this.props.firebase.user(this.props.match.params.id).off();
     }
-
     onSendPasswordResetEmail = () => {
         this.props.firebase.doPasswordReset(this.state.user.email);
     };
-
     render() {
         const { user, loading } = this.state;
         return (
             <div>
                 <h2>User ({this.props.match.params.id})</h2>
                 {loading && <div>Loading ...</div>}
-
                 {user && (
                     <div>
                         <span>
@@ -143,10 +129,8 @@ class UserItemBase extends Component {
                             <strong>Username:</strong> {user.username}
                         </span>
                         <span>
-                            <button
-                                type="button"
-                                onClick={this.onSendPasswordResetEmail}
-                            >
+                            <button type="button"
+                                onClick={this.onSendPasswordResetEmail}>
                                 Send Password Reset
                             </button>
                         </span>
