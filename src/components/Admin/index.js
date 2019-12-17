@@ -54,29 +54,35 @@ class UserListBase extends Component {
             <div>
                 <h2>Users</h2>
                 {loading && <div>Loading ...</div>}
-                <ul>
-                    {users.map(user => (
-                        <li key={user.uid}>
-                            <span>
-                                <strong>ID:</strong> {user.uid}
-                            </span>
-                            <span>
-                                <strong>E-Mail:</strong> {user.email}
-                            </span>
-                            <span>
-                                <strong>Username:</strong> {user.username}
-                            </span>
-                            <span>
-                                <Link to={{
-                                    pathname: `${ROUTES.ADMIN}/${user.uid}`,
-                                    state: { user },
-                                }}>
-                                    Details
-                                </Link>
-                            </span>
-                        </li>
-                    ))}
-                </ul>
+                <table width="100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>E-Mail</th>
+                            <th>Username</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map(user => (
+                            <tr key={user.uid}>
+                                <td>{user.uid}</td>
+                                <td>{user.email}</td>
+                                <td>{user.username}</td>
+                                <td>
+                                    <Link
+                                        to={{
+                                            pathname: `${ROUTES.ADMIN}/${user.uid}`,
+                                            state: { user },
+                                        }}
+                                    >
+                                        Details
+                                    </Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         );
     }
@@ -85,6 +91,7 @@ class UserListBase extends Component {
 class UserItemBase extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             loading: false,
             user: null,
@@ -145,6 +152,8 @@ const UserList = withFirebase(UserListBase);
 const UserItem = withFirebase(UserItemBase);
 
 const condition = authUser => authUser && authUser.roles.includes(ROLES.ADMIN);
+
+
 
 export default compose(
     withEmailVerification,
